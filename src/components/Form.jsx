@@ -32,11 +32,11 @@ const Form = () => {
   };
 
   const handleSelectedBook = (e, index) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     const addedBook = selectedBooks.map((item, ind) => {
       if (ind === index) {
         // console.log(bookData[index].chapters);
-        console.log(e.target.value)
+        // console.log(e.target.value)
         return {
           ...item,
           bookId: e.target.value,
@@ -64,7 +64,7 @@ const Form = () => {
       }
       return item;
     });
-    console.log(addedBook);
+    // console.log(addedBook);
     setSelectedBooks(addedBook);
 
     localStorage.setItem("selectedbooks", JSON.stringify(addedBook));
@@ -72,7 +72,7 @@ const Form = () => {
  
   return (
     <>
-      <div className="relative z-0 w-full mb-5 group">
+      {/* <div className="relative z-0 w-full mb-5 group">
         <input
           type="text"
           name="name"
@@ -87,10 +87,10 @@ const Form = () => {
         >
           Bookname
         </label>
-      </div>
+      </div> */}
       <div>
         {selectedBooks?.map((data, index) => {
-          console.log(data);
+          // console.log(data);
           return (
             <div>
               <div>
