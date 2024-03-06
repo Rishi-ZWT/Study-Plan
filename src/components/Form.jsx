@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import bookData from "../components/book2.json";
 
 const Form = () => {
+  
   const [selectedBooks, setSelectedBooks] = useState([
     {
       bookId: "",
@@ -94,7 +95,7 @@ const Form = () => {
           return (
             <div>
               <div>
-                <p>Select Book</p>
+                {/* <p>Select Book</p> */}
                 <select
                   name="select"
                   ind=""
@@ -102,7 +103,7 @@ const Form = () => {
                   onChange={(e) => handleSelectedBook(e, index)}
                   // disabled={data.disabled}
                 >
-                  <option value=""></option>
+                  <option value="">Select a book</option>
                   {data?.options?.map((tempdata) => {
                     return <option value={tempdata.id}>{tempdata.name}</option>;
                   })}

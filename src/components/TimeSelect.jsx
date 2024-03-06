@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import times from "./time";
-
 
 const days = [
   "Sunday",
@@ -13,7 +12,7 @@ const days = [
 ];
 
 const TimingSelect = () => {
-  const [timestamp, setTimeStamp] = useState({
+  const [timeStamp, setTimeStamp] = useState({
     0: [],
     1: [],
     2: [],
@@ -24,17 +23,17 @@ const TimingSelect = () => {
   });
 
   const handleTimeAddButtonClick = (index) => {
-    if (timestamp[index].length > 0) {
+    if (timeStamp[index].length > 0) {
       if (
-        timestamp[index][timestamp[index].length - 1].startTime === "" ||
-        timestamp[index][timestamp[index].length - 1].endTime === ""
+        timeStamp[index][timeStamp[index].length - 1].startTime === "" ||
+        timeStamp[index][timeStamp[index].length - 1].endTime === ""
       ) {
         return alert(
           `please enter from time and end time for week ${days[index]}`
         );
       }
 
-      timestamp[index][timestamp[index].length - 1].disabled = true;
+      timeStamp[index][timeStamp[index].length - 1].disabled = true;
     }
 
     const newField = {
@@ -43,114 +42,59 @@ const TimingSelect = () => {
     };
 
     const updatedTimes = {
-      ...timestamp,
+      ...timeStamp,
     };
 
-
-    updatedTimes[index] = [...timestamp[index], newField];
+    updatedTimes[index] = [...timeStamp[index], newField];
     console.log(updatedTimes);
 
     setTimeStamp(updatedTimes);
   };
 
-  // const compareTimes = (time1, time2) => {
-  //   if (time1.t >= time2.t) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
-  // const isFromOptionDisabled = (k, time) => {
-  //   let timesOfDay = timestamp[k];
-  //   // console.log(timesOfDay, "Times of day");
-
-  //   if (timesOfDay.length > 1) {
-  //     for (let i = 0; i < timesOfDay.length - 1; i++) {
-  //       const element = timesOfDay[i];
-  //       if (
-  //         JSON.parse(element.startTime).t - 1 <= time.t &&
-  //         time.t <= JSON.parse(element.endTime).t
-  //       ) {
-  //         return true;
-  //       }
-  //     }
-  //   }
-
-  //   return false;
-  // };
-
-  // const isToOptionDisabled = (k, time, selectedtimeIndex) => {
-  // if (timestamp[k][timestamp[k].length - 1].startTime.length > 0) {
-  //     let timesOfDay = timestamp[k];
-
-  //     if (
-  //       time.t <=
-  //       JSON.parse(timestamp[k][timestamp[k].length - 1].startTime).t
-  //     ) {
-  //       return true;
-  //     }
-
-  //     let nextElement = {};
-  //     let difference = 100;
-
-  //     if (timesOfDay.length > 1) {
-  //       for (let i = 0; i < timesOfDay.length - 1; i++) {
-  //         const element = timesOfDay[i];
-  //         if (
-  //           JSON.parse(element.startTime).t >
-  //             JSON.parse(timestamp[k][timestamp[k].length - 1].startTime)
-  //               .t &&
-  //           time.t >= JSON.parse(element.startTime).t
-  //         ) {
-  //           return true;
-  //         }
-  //       }
-  //     }
-
-  //     if (time.t >= nextElement.t) {
-  //       return true;
-  //     }
-
-  //     return false;
-  //   }
-  // };
-
   const handleStartTimeChange = (e, k) => {
+    // console.log("start: ", typeof e.target.value);
+    // console.log(k)
     const updatedTimes = {
-      ...timestamp,
+      ...timeStamp,
     };
     updatedTimes[k][updatedTimes[k].length - 1].startTime = e.target.value;
     setTimeStamp(updatedTimes);
   };
 
   // k is a week number
-  // e.target.value will give a time 
+  // e.target.value will give a time
   const handleEndTimeChange = (e, k) => {
+    console.log("End: ", e.target.value);
     const updatedTimes = {
-      ...timestamp,
+      ...timeStamp,
     };
     updatedTimes[k][updatedTimes[k].length - 1].endTime = e.target.value;
-    setTimeStamp(updatedTimes);
 
+    
+
+    setTimeStamp(updatedTimes);
+    console.log(updatedTimes);
     localStorage.setItem("selectedtimes", JSON.stringify(updatedTimes));
   };
-
+//   const datar = Object.values(dataObject).map((key) =>
+//   dataObject[key].map((item, index) => item)
+// );
+// console.log("datar: ", datar);
   return (
     <div>
-      {Object.keys(timestamp).map((k) => {
+      {Object.keys(timeStamp).map((k) => {
         return (
           <>
             <div key={k}>
-              <div >
+              <div>
                 <p>{k}</p>
                 <p>{days[k]}</p>
               </div>
               <div></div>
-              {timestamp[k].map((selectedtime, index) => {
+              {timeStamp[k].map((selectedtime, index) => {
                 return (
                   <>
-                    <div key={index}>
+                    <div className="flex" key={index}>
                       <div>
                         <p>Start Time</p>
                         <select
@@ -162,10 +106,7 @@ const TimingSelect = () => {
                           <option value=""></option>
                           {times.map((t) => {
                             return (
-                              <option
-                                value={JSON.stringify(t)}
-                                // disabled={isFromOptionDisabled(k, t)}
-                              >
+                              <option value={JSON.stringify(t)}>
                                 {`${t.hours}:${t.minutes} ${t.meridiem}`}
                               </option>
                             );
@@ -178,10 +119,7 @@ const TimingSelect = () => {
                           name="endTime"
                           id=""
                           onChange={(e) => handleEndTimeChange(e, k)}
-                          disabled={
-                            selectedtime.startTime == "" ||
-                            selectedtime.disabled
-                          }
+                          disabled={selectedtime.disabled}
                         >
                           <option value=""></option>
                           {selectedtime.startTime.length > 0 &&
@@ -189,7 +127,6 @@ const TimingSelect = () => {
                               return (
                                 <option
                                   value={JSON.stringify(time)}
-                                  // disabled={isToOptionDisabled(k, time, index)}
                                 >{`${time.hours}:${time.minutes} ${time.meridiem}`}</option>
                               );
                             })}
@@ -202,8 +139,7 @@ const TimingSelect = () => {
               })}
               <button
                 disabled={
-                  timestamp[k].startTime === "" ||
-                  timestamp[k].endTime === ""
+                  timeStamp[k].startTime === "" || timeStamp[k].endTime === ""
                 }
                 onClick={() => handleTimeAddButtonClick(k)}
               >
@@ -219,3 +155,4 @@ const TimingSelect = () => {
 };
 
 export default TimingSelect;
+
