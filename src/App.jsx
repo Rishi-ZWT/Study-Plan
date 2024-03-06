@@ -125,22 +125,22 @@ function App() {
 
     const newTimingState = timingState;
 
-    Object.keys(newTimingState).forEach((k) => {
-      newTimingState[k] = newTimingState[k].filter((o) => {
-        return o.startTime.length != 0 || o.endTime.length != 0;
+    Object.keys(newTimingState).forEach((xyz) => {
+      newTimingState[xyz] = newTimingState[xyz].filter((abc) => {
+        return abc.startTime.length != 0 || abc.endTime.length != 0;
       });
     });
 
-    Object.keys(newTimingState).forEach((k) => {
-      newTimingState[k] = newTimingState[k].map((o) => {
-        let stime = JSON.parse(o.startTime);
-        let etime = JSON.parse(o.endTime);
-        if (!stime || !etime) {
+    Object.keys(newTimingState).forEach((xyz) => {
+      newTimingState[xyz] = newTimingState[xyz].map((abc) => {
+        let starttime = JSON.parse(abc.startTime);
+        let endtime = JSON.parse(abc.endTime);
+        if (!starttime || !endtime) {
           return null;
         }
         return {
-          start: stime.hours + ":" + stime.minutes + " " + stime.meridiem,
-          end: etime.hours + ":" + etime.minutes + " " + etime.meridiem,
+          start: starttime.hours + ":" + starttime.minutes + " " + starttime.meridiem,
+          end: endtime.hours + ":" + endtime.minutes + " " + endtime.meridiem,
         };
       });
     });
@@ -150,11 +150,11 @@ function App() {
       ...allData,
       {
         id: random_uuid,
-        title: planName,
-        books: selectedBooks.map((b) => {
+        title: plan,
+        books: selectedBooks.map((abc) => {
           return {
-            book_id: b.bookId,
-            chapters: [...b.chapters],
+            book_id: abc.bookId,
+            chapters: [...abc.chapters],
           };
         }),
         totalReadtime: selectedTimes,
