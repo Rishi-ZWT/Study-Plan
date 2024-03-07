@@ -203,20 +203,26 @@ function App() {
 
   return (
     <>
-      <div className="App">
+      <div class="flex items-center justify-center h-full">
+      <div class="bg-white p-6 rounded-lg shadow-md">
         <input
           type="text"
           placeholder="Plan Title"
           onChange={(e) => setPlan(e.target.value)}
         />
         <br />
+        <hr />
         <Form
           selectedBooks={selectedBooks}
           setSelectedBooks={setSelectedBooks}
         />
-        <br />
+        <hr />
+        <hr />
+        <hr />
         <TimeSelect timingState={timingState} setTimingState={setTimingState} />
-        <br />
+        <hr />
+        <hr />
+        <hr />
         <div>
           <span>Start Date __ </span>
           <input
@@ -231,11 +237,11 @@ function App() {
         <div>
           <span>End Date __ </span>
           <input type="date" onChange={handleDateChange} name="" id="" />
-          {endDate && <p>End Date - {moment(enddate).format("ll")}</p>}
         </div>
         <br />
         <div>
           <button onClick={handleSubmit}>Submit</button>
+        </div>
         </div>
       </div>
     </>

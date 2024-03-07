@@ -76,10 +76,7 @@ const TimingSelect = () => {
     console.log(updatedTimes);
     localStorage.setItem("selectedtimes", JSON.stringify(updatedTimes));
   };
-//   const datar = Object.values(dataObject).map((key) =>
-//   dataObject[key].map((item, index) => item)
-// );
-// console.log("datar: ", datar);
+
   return (
     <div>
       {Object.keys(timeStamp).map((k) => {
@@ -131,6 +128,7 @@ const TimingSelect = () => {
                               );
                             })}
                         </select>
+                    
                       </div>
                     </div>
                     <div></div>
@@ -145,6 +143,7 @@ const TimingSelect = () => {
               >
                 +
               </button>
+              <hr />
             </div>
             <div className="divider"></div>
           </>
